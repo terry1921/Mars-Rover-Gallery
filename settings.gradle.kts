@@ -1,8 +1,11 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        gradlePluginPortal()
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
     }
 }
 dependencyResolutionManagement {
@@ -10,7 +13,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
     }
 }
 rootProject.name = "Mars Rovers Gallery"
-include ':app'
+include(":app")
