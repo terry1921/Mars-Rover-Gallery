@@ -1,5 +1,6 @@
 import com.mx.rockstar.marsroversgallery.Configuration
 
+apply(plugin = "org.jetbrains.kotlin.android")
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id(libs.plugins.android.application.get().pluginId)
@@ -58,8 +59,15 @@ android {
 
 dependencies {
     // modules
+    implementation(project(":core-data"))
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    testImplementation(project(":core-network"))
 
     // modules for unit test
+    testImplementation(project(":core-database"))
+    testImplementation(project(":core-test"))
+    androidTestImplementation(project(":core-test"))
 
     // androidx
     implementation(libs.material)
@@ -100,6 +108,7 @@ dependencies {
     implementation(libs.rainbow)
     implementation(libs.androidRibbon)
     implementation(libs.progressView)
+    implementation(libs.powerSpinner)
 
     // unit test
     testImplementation(libs.junit)

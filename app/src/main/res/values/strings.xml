@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Mars Rovers Gallery</string>
+    <string name="rover_explorer_label">Choose a Rover to Explore</string>
+    <string name="rover_cameras_label">Rover Cameras</string>
+    <string name="sol_label">Sol</string>
+    <string name="search_button">Buscar</string>
 </resources>

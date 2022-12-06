@@ -19,3 +19,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Mars Rovers Gallery"
 include(":app")
+include(":core-model")
+include(":core-network")
+include(":core-database")
+include(":core-data")
+include(":core-test")

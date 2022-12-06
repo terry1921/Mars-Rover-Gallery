@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <item name="textInputStyle">@style/AppTheme.TextInputLayout</item>
+    </style>
+
+    <style name="TextStyle" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CircleImageStyle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.CardView" parent="">
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeBottomLeft">20%</item>
+        <item name="cornerSizeBottomRight">20%</item>
+    </style>
+
+    <style name="AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <!-- línea inferior -->
+        <item name="boxStrokeColor">@color/steel</item>
+        <!-- el color de relleno, (por defecto es colorOnSurface)-->
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <!-- el hint cuando el campo está vacio y sin foco-->
+        <item name="android:textColorHint">@color/background800</item>
+        <!-- el hint cuando se convierte en etiqueta flotante-->
+        <item name="hintTextColor">@color/colorAccent</item>
+    </style>
+
+</resources>

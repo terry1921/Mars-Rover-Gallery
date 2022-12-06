@@ -3,15 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mx.rockstar.marsroversgallery">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:allowBackup="true"
+        android:name=".MarsApp"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MarsRoversGallery"
-        tools:targetApi="31" />
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup">
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.mx.rockstar.marsroversgallery.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.mx.rockstar.marsroversgallery.initializer.TimberInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <profileable
+            android:shell="true"
+            tools:targetApi="31" />
+
+    </application>
 
 </manifest>
