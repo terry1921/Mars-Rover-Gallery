@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.mx.rockstar.core.model.Rover
 import com.mx.rockstar.marsroversgallery.R
 import com.mx.rockstar.marsroversgallery.databinding.ItemRoverBinding
+import com.mx.rockstar.marsroversgallery.ui.detail.RoverPhotosActivity
 import com.skydoves.bindables.BindingListAdapter
 import com.skydoves.bindables.binding
 import timber.log.Timber
@@ -31,8 +32,11 @@ class RoverAdapter : BindingListAdapter<Rover, RoverAdapter.RoverViewHolder>(dif
                     bindingAdapterPosition.takeIf { it != NO_POSITION } ?: return@setOnClickListener
                 val currentClickedAt = SystemClock.elapsedRealtime()
                 if (currentClickedAt - onClickedAt > binding.transformationLayout.duration) {
-                    // call another activity
                     Timber.d("item ${getItem(position)}")
+                    RoverPhotosActivity.startActivity(
+                        binding.transformationLayout,
+                        getItem(position)
+                    )
                     onClickedAt = currentClickedAt
                 }
 
@@ -49,7 +53,7 @@ class RoverAdapter : BindingListAdapter<Rover, RoverAdapter.RoverViewHolder>(dif
     companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<Rover>() {
             override fun areItemsTheSame(oldItem: Rover, newItem: Rover): Boolean =
-                oldItem.name == newItem.name
+                oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Rover, newItem: Rover): Boolean =
                 oldItem == newItem

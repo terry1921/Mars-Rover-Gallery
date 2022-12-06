@@ -19,6 +19,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         onTransformationStartContainer()
         super.onCreate(savedInstanceState)
         binding {
+            toolbartitle = getString(R.string.app_name)
             vm = viewModel
             adapter = RoverAdapter()
             lifecycleOwner = this@MainActivity

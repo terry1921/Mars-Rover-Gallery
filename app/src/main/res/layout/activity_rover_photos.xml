@@ -2,19 +2,22 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.detail.RoverPhotosActivity">
 
     <data>
-        <variable
-            name="toolbartitle"
-            type="java.lang.String" />
+
         <variable
             name="vm"
-            type="com.mx.rockstar.marsroversgallery.ui.main.MainViewModel" />
+            type="com.mx.rockstar.marsroversgallery.ui.detail.RoverPhotoViewModel" />
+
+        <variable
+            name="rover"
+            type="com.mx.rockstar.core.model.Rover" />
 
         <variable
             name="adapter"
-            type="com.mx.rockstar.marsroversgallery.ui.main.RoverAdapter" />
+            type="com.mx.rockstar.marsroversgallery.ui.detail.PhotoAdapter" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,21 +30,18 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <include
                 android:id="@+id/main_toolbar"
                 layout="@layout/toolbar_home"
-                app:toolbarTitle="@{toolbartitle}"/>
+                app:toolbarTitle="@{rover.name}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!--
-        android:scrollbarThumbVertical="@drawable/scrollbar"
-        -->
-        <androidx.recyclerview.widget.RecyclerView
+        <!--<androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -51,15 +51,16 @@
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
             app:adapter="@{adapter}"
+            android:scrollbarThumbVertical="@drawable/scrollbar"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:paginationPokemonList="@{vm}"
             app:spanCount="2"
-            tools:itemCount="4"
-            app:submitList="@{vm.roverList}"
+            app:submitList="@{vm.photoList}"
             app:toast="@{vm.toastMessage}"
-            tools:listitem="@layout/item_rover" />
+            tools:listitem="@layout/item_photo" />-->
 
         <ProgressBar
             android:id="@+id/progressbar"
@@ -72,5 +73,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

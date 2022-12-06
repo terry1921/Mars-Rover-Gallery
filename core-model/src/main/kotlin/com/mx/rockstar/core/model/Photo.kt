@@ -28,6 +28,8 @@ data class Photo(
 
 ) {
 
+    fun getName(): String = "${rover?.name} - ${camera?.name}"
+
     @JsonClass(generateAdapter = true)
     data class Rover(
 

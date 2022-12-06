@@ -1,8 +1,11 @@
 package com.mx.rockstar.core.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class Camera(
 
@@ -18,7 +21,7 @@ data class Camera(
     @field:Json(name = "full_name")
     val fullName: String? = null
 
-)
+) : Parcelable
 
 enum class CameraAbbrev() {
     FHAZ,

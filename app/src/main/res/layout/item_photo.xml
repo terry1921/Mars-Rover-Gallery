@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="rover"
-            type="com.mx.rockstar.core.model.Rover" />
+            name="photo"
+            type="com.mx.rockstar.core.model.Photo" />
 
     </data>
 
@@ -45,7 +45,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:paletteCard="@{cardView}"
-                    app:paletteImage="@{rover.image}" />
+                    app:paletteImage="@{photo.imgSrc}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/name"
@@ -55,7 +55,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:padding="12dp"
-                    android:text="@{rover.name}"
+                    android:text="@{photo.name}"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
