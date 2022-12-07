@@ -42,6 +42,4 @@ class MainViewModel @Inject constructor(
         Timber.d("Init MainViewModel")
     }
 
-
-
 }

@@ -38,7 +38,10 @@ data class Rover(
     @field:Json(name = "image")
     var image: String = ""
 
-) : Parcelable
+) : Parcelable {
+    constructor(id: Int, name: String, landingDate: String, launchDate: String, status: String):
+            this(id, name, landingDate, launchDate, status, -1, "", -1, emptyList())
+}
 
 enum class RoverType {
     CURIOSITY,

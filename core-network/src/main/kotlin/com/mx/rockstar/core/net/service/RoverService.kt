@@ -13,7 +13,7 @@ interface RoverService {
     suspend fun fetchPhotos(
         @Path("type") type : String,
         @Query("sol") sol: Int,
-        @Query("camera") camera: String,
+        @Query("camera") camera: String?,
         @Query("page") page: Int
     ) : ApiResponse<PhotosResponse>
 

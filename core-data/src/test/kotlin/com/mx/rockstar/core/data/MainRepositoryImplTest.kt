@@ -7,13 +7,14 @@ import com.mx.rockstar.core.data.repository.PhotoRepository
 import com.mx.rockstar.core.data.repository.PhotoRepositoryImpl
 import com.mx.rockstar.core.database.PhotoDao
 import com.mx.rockstar.core.database.entity.mapper.asEntity
-import com.mx.rockstar.core.model.CameraAbbrev
-import com.mx.rockstar.core.model.RoverType
+import com.mx.rockstar.core.model.mapper.asCapsule
 import com.mx.rockstar.core.net.model.PhotosResponse
 import com.mx.rockstar.core.net.service.RoverClient
 import com.mx.rockstar.core.net.service.RoverService
 import com.mx.rockstar.core.test.MainCoroutinesRule
+import com.mx.rockstar.core.test.MockUtil.mockCamera
 import com.mx.rockstar.core.test.MockUtil.mockPhotoList
+import com.mx.rockstar.core.test.MockUtil.mockRover
 import com.nhaarman.mockitokotlin2.*
 import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.test.runTest
@@ -30,7 +31,7 @@ class MainRepositoryImplTest {
     private lateinit var repository: PhotoRepository
     private lateinit var client: RoverClient
     private val service: RoverService = mock()
-    private val roverDao: PhotoDao = mock()
+    private val photoDao: PhotoDao = mock()
 
     @get:Rule
     val coroutinesRule = MainCoroutinesRule()
@@ -38,24 +39,29 @@ class MainRepositoryImplTest {
     @Before
     fun setup() {
         client = RoverClient(service)
-        repository = PhotoRepositoryImpl(client, roverDao, coroutinesRule.testDispatcher)
+        repository = PhotoRepositoryImpl(client, photoDao, coroutinesRule.testDispatcher)
     }
 
     @Test
     fun fetchPhotosFromNetworkTest() = runTest {
-        val roverType = RoverType.OPPORTUNITY.toLower()
-        val fhaz = CameraAbbrev.FHAZ.name
+        val roverType = mockRover().name
+        val fhaz = mockCamera().name
 
         val mockData = PhotosResponse(mockPhotoList())
-        whenever(roverDao.getPhotosBySolAndPage(sol = SOL_10, page = PAGE_1))
-            .thenReturn(emptyList())
+        whenever(photoDao.getPhotosList(sol = SOL_10, page = PAGE_1)).thenReturn(emptyList())
+        whenever(
+            photoDao.getAllPhotosList(
+                sol = SOL_10,
+                page = PAGE_1
+            )
+        ).thenReturn(mockData.photos.asEntity())
         whenever(service.fetchPhotos(type = roverType, sol = SOL_10, camera = fhaz, page = PAGE_1))
             .thenReturn(ApiResponse.of { Response.success(mockData) })
 
         repository.fetchPhotos(
             sol = SOL_10,
-            rover = RoverType.OPPORTUNITY,
-            camera = CameraAbbrev.FHAZ,
+            rover = mockRover().asCapsule(),
+            camera = mockCamera(),
             page = PAGE_1,
             onStart = {},
             onComplete = {},
@@ -70,27 +76,37 @@ class MainRepositoryImplTest {
             awaitComplete()
         }
 
-        verify(roverDao, atLeastOnce()).getPhotosBySolAndPage(SOL_10, PAGE_1)
+        verify(photoDao, atLeastOnce()).getPhotosList(SOL_10, PAGE_1)
         verify(service, atLeastOnce()).fetchPhotos(
             type = roverType,
             sol = SOL_10,
             camera = fhaz,
             page = PAGE_1
         )
-        verify(roverDao, atLeastOnce()).insertPhotosList(mockPhotoList().asEntity())
+        verify(photoDao, atLeastOnce()).insertPhotosList(mockPhotoList().asEntity())
         verifyNoMoreInteractions(service)
     }
 
     @Test
     fun fetchPhotosFromDataBaseTest() = runTest {
         val mockData = PhotosResponse(mockPhotoList())
-        whenever(roverDao.getPhotosBySolAndPage(sol = SOL_10, page = PAGE_1))
-            .thenReturn(mockData.photos.asEntity())
+        whenever(
+            photoDao.getPhotosList(
+                sol = SOL_10,
+                page = PAGE_1
+            )
+        ).thenReturn(mockData.photos.asEntity())
+        whenever(
+            photoDao.getAllPhotosList(
+                sol = SOL_10,
+                page = PAGE_1
+            )
+        ).thenReturn(mockData.photos.asEntity())
 
         repository.fetchPhotos(
             sol = SOL_10,
-            rover = RoverType.OPPORTUNITY,
-            camera = CameraAbbrev.FHAZ,
+            rover = mockRover().asCapsule(),
+            camera = mockCamera(),
             page = PAGE_1,
             onStart = {},
             onComplete = {},
@@ -105,7 +121,8 @@ class MainRepositoryImplTest {
             awaitComplete()
         }
 
-        verify(roverDao, atLeastOnce()).getPhotosBySolAndPage(SOL_10, PAGE_1)
+        verify(photoDao, atLeastOnce()).getPhotosList(SOL_10, PAGE_1)
+        verify(photoDao, atLeastOnce()).getAllPhotosList(SOL_10, PAGE_1)
     }
 
     companion object {

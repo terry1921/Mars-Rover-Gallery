@@ -5,6 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mx.rockstar.core.database.entity.PhotoEntity
+import com.mx.rockstar.core.model.Camera
+import com.mx.rockstar.core.model.Photo
 
 @Dao
 interface PhotoDao {
@@ -16,7 +18,10 @@ interface PhotoDao {
     suspend fun getPhotoList(): List<PhotoEntity>
 
     @Query("SELECT * FROM PhotoEntity WHERE sol == :sol AND page == :page")
-    suspend fun getPhotosBySolAndPage(sol: Int, page: Int): List<PhotoEntity>
+    suspend fun getPhotosList(sol: Int, page: Int): List<PhotoEntity>
+
+    @Query("SELECT * FROM PhotoEntity WHERE sol == :sol AND page <= :page")
+    suspend fun getAllPhotosList(sol: Int, page: Int): List<PhotoEntity>
 
     @Query("DELETE FROM PhotoEntity")
     suspend fun deletePhotos()

@@ -24,7 +24,7 @@ class RoverPhotosActivity :
 
     @get:VisibleForTesting
     internal val viewModel: RoverPhotoViewModel by viewModels {
-        RoverPhotoViewModel.provideFactory(roverPhotoViewModel)
+        RoverPhotoViewModel.provideFactory(roverPhotoViewModel, roverItem)
     }
 
     private val roverItem: Rover by bundleNonNull(EXTRA_ROVER)
@@ -36,7 +36,6 @@ class RoverPhotosActivity :
             rover = roverItem
             vm = viewModel
             adapter = PhotoAdapter()
-            lifecycleOwner = this@RoverPhotosActivity
         }
     }
 

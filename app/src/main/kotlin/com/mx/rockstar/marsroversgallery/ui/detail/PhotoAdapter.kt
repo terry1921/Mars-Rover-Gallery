@@ -38,12 +38,14 @@ class PhotoAdapter : BindingListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(dif
         }
 
         fun bindPhoto(photo: Photo) {
-            TODO("Not yet implemented")
+            binding.photo = photo
+            binding.executePendingBindings()
         }
     }
 
     companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<Photo>() {
+
             override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean =
                 oldItem.id == newItem.id
 

@@ -6,7 +6,7 @@ import com.mx.rockstar.core.model.Rover
 
 object MockUtil {
 
-    private fun mockCamera() = Camera(
+    fun mockCamera() = Camera(
         id = 14,
         name = "FHAZ",
         roverId = 6,
@@ -21,11 +21,11 @@ object MockUtil {
     )
 
     private fun mockPhotoRover() = Photo.Rover(
-        id = 6,
+        id = 5,
         name = "Opportunity",
-        landingDate = "2004-01-25",
-        launchDate = "2003-07-07",
-        status = "2003-07-07"
+        landingDate = "2012-08-06",
+        launchDate = "2011-11-26",
+        status = "active"
     )
 
     fun mockPhoto() = Photo(

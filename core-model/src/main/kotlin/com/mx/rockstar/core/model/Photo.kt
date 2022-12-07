@@ -37,7 +37,7 @@ data class Photo(
         val id: Int,
 
         @field:Json(name = "name")
-        val name: String? = null,
+        val name: String = "",
 
         @field:Json(name = "launch_date")
         val launchDate: String? = null,
