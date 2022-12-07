@@ -53,6 +53,18 @@ object ViewBinding {
     }
 
     @JvmStatic
+    @BindingAdapter("loadImage")
+    fun bindLoadImage(view: AppCompatImageView, url: String) {
+        Glide.with(view.context)
+            .load(url)
+            .listener(
+                GlidePalette.with(url)
+                    .use(BitmapPalette.Profile.MUTED_LIGHT)
+                    .crossfade(true)
+            ).into(view)
+    }
+
+    @JvmStatic
     @BindingAdapter("paletteImage", "paletteView")
     fun bindLoadImagePaletteView(view: AppCompatImageView, url: String, paletteView: View) {
         val context = view.context

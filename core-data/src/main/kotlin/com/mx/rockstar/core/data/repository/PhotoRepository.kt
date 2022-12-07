@@ -11,7 +11,7 @@ interface PhotoRepository {
     fun fetchPhotos(
         sol: Int,
         rover: Photo.Rover,
-        camera: Camera?,
+        camera: String?,
         page: Int,
         onStart: () -> Unit,
         onComplete: (Int) -> Unit,

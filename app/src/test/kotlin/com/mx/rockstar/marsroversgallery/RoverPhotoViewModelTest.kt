@@ -39,7 +39,7 @@ class RoverPhotoViewModelTest {
     @Before
     fun setup() {
         photoRepository = PhotoRepositoryImpl(roverClient, photoDao, coroutinesRule.testDispatcher)
-        viewModel = RoverPhotoViewModel(photoRepository, MockUtil.mockRover())
+        viewModel = RoverPhotoViewModel(photoRepository, mockRover())
     }
 
     @Test
@@ -51,7 +51,7 @@ class RoverPhotoViewModelTest {
         photoRepository.fetchPhotos(
             sol = 10,
             rover = mockRover().asCapsule(),
-            camera = mockCamera(),
+            camera = mockCamera().name,
             page = 1,
             onStart = {},
             onComplete = {},

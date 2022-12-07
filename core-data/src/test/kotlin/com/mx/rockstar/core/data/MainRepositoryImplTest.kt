@@ -61,7 +61,7 @@ class MainRepositoryImplTest {
         repository.fetchPhotos(
             sol = SOL_10,
             rover = mockRover().asCapsule(),
-            camera = mockCamera(),
+            camera = mockCamera().name,
             page = PAGE_1,
             onStart = {},
             onComplete = {},
@@ -106,7 +106,7 @@ class MainRepositoryImplTest {
         repository.fetchPhotos(
             sol = SOL_10,
             rover = mockRover().asCapsule(),
-            camera = mockCamera(),
+            camera = mockCamera().name,
             page = PAGE_1,
             onStart = {},
             onComplete = {},

@@ -9,6 +9,8 @@ import com.mx.rockstar.marsroversgallery.databinding.ActivityRoverPhotosBinding
 import com.skydoves.bindables.BindingActivity
 import com.skydoves.bundler.bundleNonNull
 import com.skydoves.bundler.intentOf
+import com.skydoves.powerspinner.IconSpinnerAdapter
+import com.skydoves.powerspinner.IconSpinnerItem
 import com.skydoves.transformationlayout.TransformationCompat
 import com.skydoves.transformationlayout.TransformationLayout
 import com.skydoves.transformationlayout.onTransformationStartContainer
@@ -36,6 +38,16 @@ class RoverPhotosActivity :
             rover = roverItem
             vm = viewModel
             adapter = PhotoAdapter()
+        }
+        val items = roverItem.cameras.map { camera ->
+            IconSpinnerItem(text = camera.name.toString())
+        }
+        binding.selectCamera.apply {
+            setSpinnerAdapter(IconSpinnerAdapter(this))
+            setItems(items)
+            setOnSpinnerItemSelectedListener<IconSpinnerItem> { _, _, _, newItem ->
+                viewModel.selected(newItem.text)
+            }
         }
     }
 

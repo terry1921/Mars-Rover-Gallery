@@ -7,17 +7,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.mx.rockstar.core.data.repository.PhotoRepository
-import com.mx.rockstar.core.model.Camera
 import com.mx.rockstar.core.model.Photo
 import com.mx.rockstar.core.model.Rover
 import com.mx.rockstar.core.model.mapper.asCapsule
+import com.mx.rockstar.marsroversgallery.utils.default
 import com.skydoves.bindables.BindingViewModel
 import com.skydoves.bindables.asBindingProperty
 import com.skydoves.bindables.bindingProperty
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 class RoverPhotoViewModel @AssistedInject constructor(
@@ -37,12 +40,13 @@ class RoverPhotoViewModel @AssistedInject constructor(
     var toastMessage: String? by bindingProperty(null)
         private set
 
-    private val camera = MutableLiveData<Camera>()
+    val camera: MutableLiveData<String?> = MutableLiveData<String?>() //.default(null)
+    val sol: MutableLiveData<String> = MutableLiveData<String>() //.default("1")
 
-    private val photoFetchingIndex: MutableStateFlow<Int> = MutableStateFlow(1)
-    private val photosListFlow = photoFetchingIndex.flatMapLatest { page ->
+    private val _photoFetchingIndex = MutableStateFlow(1)
+    private val photosListFlow = _photoFetchingIndex.flatMapLatest { page ->
         photosRepository.fetchPhotos(
-            sol = 1,
+            sol = sol.value?.toInt() ?: 1,
             rover = rover.asCapsule(),
             camera = camera.value,
             page = page,
@@ -65,8 +69,20 @@ class RoverPhotoViewModel @AssistedInject constructor(
     @MainThread
     fun fetchNextPhotoList() {
         if (!isLoading) {
-            photoFetchingIndex.value++
+            _photoFetchingIndex.value++
         }
+    }
+
+    fun selected(text: CharSequence) {
+        camera.value = text.toString()
+        Timber.d("---> sol: ${sol.value}")
+        Timber.d("---> text: ${camera.value}")
+        load()
+    }
+
+    private fun load() = runBlocking {
+        _photoFetchingIndex.value = 0
+        fetchNextPhotoList()
     }
 
     @dagger.assisted.AssistedFactory

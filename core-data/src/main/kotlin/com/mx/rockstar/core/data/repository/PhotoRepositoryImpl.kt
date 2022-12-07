@@ -4,7 +4,6 @@ import androidx.annotation.WorkerThread
 import com.mx.rockstar.core.database.PhotoDao
 import com.mx.rockstar.core.database.entity.mapper.asDomain
 import com.mx.rockstar.core.database.entity.mapper.asEntity
-import com.mx.rockstar.core.model.Camera
 import com.mx.rockstar.core.model.Photo
 import com.mx.rockstar.core.net.AppDispatcher
 import com.mx.rockstar.core.net.Dispatcher
@@ -32,7 +31,7 @@ class PhotoRepositoryImpl @Inject constructor(
     override fun fetchPhotos(
         sol: Int,
         rover: Photo.Rover,
-        camera: Camera?,
+        camera: String?,
         page: Int,
         onStart: () -> Unit,
         onComplete: (Int) -> Unit,
@@ -44,7 +43,7 @@ class PhotoRepositoryImpl @Inject constructor(
              * fetches a list of [Photo] from the network and getting [ApiResponse] asynchronously.
              * @see [suspendOnSuccess](https://github.com/skydoves/sandwich#apiresponse-extensions-for-coroutines)
              */
-            val response = roverClient.fetchPhotosList(sol, rover.name, camera?.name, page)
+            val response = roverClient.fetchPhotosList(sol, rover.name, camera, page)
             response.suspendOnSuccess {
                 photos = data.photos
                 photos.forEach { photo -> photo.page = page }
@@ -68,12 +67,12 @@ class PhotoRepositoryImpl @Inject constructor(
 
     private fun filterPhotos(
         list: List<Photo>,
-        camera: Camera?,
+        camera: String?,
         rover: Photo.Rover
     ): List<Photo> {
         var photoList = list
         photoList = photoList.filter { it.rover?.id == rover.id }
-        if (camera != null) photoList = photoList.filter { it.camera?.id == camera.id }
+        if (camera != null) photoList = photoList.filter { it.camera?.name == camera }
         return photoList
     }
 
