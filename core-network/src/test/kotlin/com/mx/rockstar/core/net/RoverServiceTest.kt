@@ -1,7 +1,5 @@
 package com.mx.rockstar.core.net
 
-import com.mx.rockstar.core.model.CameraAbbrev
-import com.mx.rockstar.core.model.RoverType
 import com.mx.rockstar.core.net.service.RoverService
 import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,8 +15,8 @@ class RoverServiceTest : ApiAbstract<RoverService>() {
 
     private lateinit var service: RoverService
     private val sol = 10
-    private val roverType = RoverType.OPPORTUNITY.toLower()
-    private val camera = CameraAbbrev.FHAZ.name
+    private val roverType = "opportunity"
+    private val camera = "FHAZ"
 
     @Before
     fun initService() {

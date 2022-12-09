@@ -42,14 +42,3 @@ data class Rover(
     constructor(id: Int, name: String, landingDate: String, launchDate: String, status: String):
             this(id, name, landingDate, launchDate, status, -1, "", -1, emptyList())
 }
-
-enum class RoverType {
-    CURIOSITY,
-    OPPORTUNITY,
-    SPIRIT,
-    PERSEVERANCE;
-
-    override fun toString(): String = this.name
-
-    fun toLower(): String = this.name.lowercase()
-}

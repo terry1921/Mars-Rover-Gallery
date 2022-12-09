@@ -22,18 +22,3 @@ data class Camera(
     val fullName: String? = null
 
 ) : Parcelable
-
-enum class CameraAbbrev() {
-    FHAZ,
-    RHAZ,
-    MAST,
-    CHAMCAM,
-    MAHLI,
-    MARDI,
-    NAVCAM,
-    PANCAM,
-    MINITES;
-
-    override fun toString(): String = this.name
-
-}
