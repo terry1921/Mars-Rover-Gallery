@@ -8,6 +8,7 @@ import com.mx.rockstar.core.net.AppDispatcher
 import com.mx.rockstar.core.net.Dispatcher
 import com.mx.rockstar.core.net.service.RoverClient
 import com.skydoves.sandwich.message
+import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.CoroutineDispatcher
